@@ -68,8 +68,7 @@ function checkFruit(fruit){
 Try it for yourself. You can do the same with numbers, but the importance is the syntax.
 The condition you're checking should be in brackets ```(condition)``` and you can evaluate whatever you want, provided that the condition results in a boolean value.
 
-```==``` is equal to, ```=``` is an assignment. So ```fruit = "banana"``` is giving fruit a value, but ```fruit == "banana"``` is checking to see if the fruit is banana.
-
+**NOTE: ```==``` is equal to, ```=``` is an assignment. So ```fruit = "banana"``` is giving fruit a value, but ```fruit == "banana"``` is checking to see if the fruit is banana.**
 
 You can use ```else``` like a default, so if your value doesn't fit any other known scenarios then you can do the else. Or if you only have one thing you're checking for, then if/else work as a helpful combo. What you use is all dependent on what you need to do.
 
@@ -78,7 +77,11 @@ You can use ```else``` like a default, so if your value doesn't fit any other kn
 This is a loop, in this instance, based on the condition given.
 
 The syntax is:
-```while (condition) { doSomething(); }```
+```javascript
+while (condition) {
+  doSomething...;
+}
+```
 
 So in this, the code in the {} will execute until the condition is no longer true.
 
@@ -87,7 +90,10 @@ while (true) {
     console.log("Hello");
 }
 ```
-This is called an infinite loop and the statement will be executed unendingly. Try it. I dare you.
+This is called an infinite loop and the statement will be executed unendingly. Try it. I dare you. *If you do, then ctrl+c*
+
+
+If you want to increment a counter, or add things recursively until a certain condition is met, then a while loop is a good start.
 
 ## For
 
@@ -98,3 +104,52 @@ for (i = 0; i < 5; i++) {
 ```
 
 ## Fun Exercise: The Guessing Game
+
+```javascript
+// Get process.stdin as the standard input object.
+var standard_input = process.stdin;
+// Set input character encoding.
+standard_input.setEncoding('utf-8');
+
+// Prompt user to input data in console.
+console.log("Guess A Number Game! Enter a number between 1 and 10:");
+
+var secretNumber = Math.floor((Math.random() * 10) + 1);;
+
+function guessingGame(){
+  var guessed = false;
+  while (!guessed) {
+    // When user input data and click enter key.
+    standard_input.on('data', function (data) {
+        // User input exit.
+        if(data === 'exit\n'){
+            // Program exit.
+            console.log("Program exit.");
+            process.exit();
+        } else {
+            // Make a guess.
+            makeGuess(data);
+        }
+    });
+    function makeGuess(guess){
+      if (guess > secretNumber){
+        console.log("Number too big. Guess again!");
+      } else if (guess < secretNumber){
+        console.log("Number too small. Guess again!");
+      } else if (guess == secretNumber){
+        console.log("You Win!");
+        guessed = true;
+
+      }
+    }
+  }
+  process.exit();
+}
+
+guessingGame();
+```
+
+Save this code as guessingGame.js and then run this from the terminal (in Cloud9 or locally):
+```bash
+node guessingGame.js
+```
